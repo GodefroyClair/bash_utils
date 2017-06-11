@@ -1,0 +1,2 @@
+curl -X POST -u
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxx --header "Content-Type: application/json" --header "Accept: audio/wav" --data @/Users/godot/Desktop/texttosay.json --output bonjour.wav "https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?voice=fr-FR_ReneeVoice"

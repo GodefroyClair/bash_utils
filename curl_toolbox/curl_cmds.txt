@@ -1,0 +1,2 @@
+curl -d @measure.txt localhost:8080/v1/cuve/101/measures --header Content-Type:application/json -v
+curl -d @measure.txt localhost:8080/v1/test/measures --header Content-Type:application/json -v

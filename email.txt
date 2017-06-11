@@ -1,0 +1,103 @@
+Date: Tues, 7 Jun 2016 18:40:30 -0700 (PDT)
+From: godefroy.clair@gmail.com
+Bcc: godefroy.clair@gmail.com
+Subject: 75060222f40e Task 01 answer
+Date: Mer  8 jui 2016 10:58:00 CEST
+Content-Type: multipart/mixed;
+    boundary="_f4e7_"
+--_f4e7_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Sorry wrong id in my last email... This is my answer for the first assignement.
+
+Best regards,
+GC
+
+
+
+--_f4e7_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7BIT
+Content-Disposition: attachment;
+	filename=hello.c
+
+
+//code modified from a geekstuff tutorial on how to write linux kernel module (17 07 2013)
+//see http://www.thegeekstuff.com/2013/07/write-linux-kernel-module/
+#include <linux/module.h>    // included for all kernel modules
+#include <linux/kernel.h>    // included for KERN_INFO
+#include <linux/init.h>      // included for __init and __exit macros
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Clair");
+MODULE_DESCRIPTION("Task 01 of the Eudyptula : Hello World kernel module");
+
+static int __init hello_init(void){
+    printk(KERN_DEBUG "Hello world!\n");
+    return 0;
+}
+
+static void __exit hello_exit(void){
+    printk(KERN_DEBUG "Unloading hello world kernel module.\n");
+}
+
+module_init(hello_init);
+module_exit(hello_exit);
+
+
+--_f4e7_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7BIT
+Content-Disposition: attachment;
+	filename=Makefile
+
+# if KERNELRELEASE is defined, we've been invoked from the
+# kernel build system and can use its language.
+ifneq ($(KERNELRELEASE),)
+    obj-m := hello.o
+# Otherwise we were called directly from the command line.
+# Invoke the kernel build system.
+else
+    KERNEL_SOURCE ?= /lib/modules/$(shell uname -r)/build
+    PWD := $(shell pwd)
+default:
+    $(MAKE) -C $(KERNEL_SOURCE) M=$(PWD) modules
+clean:
+    $(MAKE) -C $(KERNEL_SOURCE) M=$(PWD) clean
+endif
+
+--_f4e7_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7BIT
+Content-Disposition: attachment;
+	filename=proof.txt
+
+
+Proof of the "Hello World!" kernel module being build, running in my kernel
+---------------------------------------------------------------------------
+
+-----------------------standard out of "# make"---------------------------
+make -C /lib/modules/4.4.12-v7+/build M=/home/pi/task01 modules
+make[1]: Entering directory '/home/pi/linux-e64101f36454e54b877fde44ed866320636e590b'
+  Building modules, stage 2.
+  MODPOST 1 modules
+make[1]: Leaving directory '/home/pi/linux-e64101f36454e54b877fde44ed866320636e590b
+
+-----------------------------------------------------------------
+
+------------std out of "# insmod hello.ko; dmesg |tail -1"--------
+[247270.981075] Hello world!
+-----------------------------------------------------------------
+
+------------std out of "# lsmod | grep "hello"-------------------
+hello                    798  0
+-----------------------------------------------------------------
+
+
+------------std out of "# rmmod hello; dmesg | tail -1"--------
+[247272.471952] Unloading hello world kernel module.
+------------------------------------------------------------------------------
+
+--_f4e7_--
+

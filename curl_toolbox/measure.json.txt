@@ -1,0 +1,1 @@
+{"timestamp": 1230931, "type": "temperature", "value": 0}
